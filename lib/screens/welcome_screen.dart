@@ -1,6 +1,12 @@
+import 'package:comchart/screens/login_screen.dart';
+import 'package:comchart/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
+static const String id = "welcome_scrin";
+// задается модификатор, по которому обращается руоутер
+
+
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -41,8 +47,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 color: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.circular(30.0),
                 child: MaterialButton(
+                  //onPressed: () => context.go("/settings"),
                   onPressed: () {
-                    //Go to login screen.
+                    print('нажата логин');
+                   Navigator.pushNamed(context, LoginScreen.id);
+
+
+                    // Navigator.pushNamed(context, LoginScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,
@@ -60,8 +71,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
-                    //Go to registration screen.
+                    print('нажата регистрация');
+                  Navigator.pushNamed(context, RegistrationScreen.id);
+
                   },
+
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
