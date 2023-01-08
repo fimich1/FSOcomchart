@@ -3,19 +3,41 @@ import 'package:comchart/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
-static const String id = "welcome_scrin";
+  static const String id = "welcome_scrin";
 // задается модификатор, по которому обращается руоутер
-
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation animation;
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(duration: Duration(seconds: 1), vsync: this);
+    animation =
+        ColorTween(begin: Colors.blueGrey, end: Colors.white).animate(controller);
+    controller.forward();
+    controller.addListener(() {
+      setState(() {});
+      print(animation.value);
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -55,8 +77,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     // if (kDebugMode) {
                     //   print('нажата логин');
                     // }
-                   Navigator.pushNamed(context, LoginScreen.id);
-
+                    Navigator.pushNamed(context, LoginScreen.id);
 
                     // Navigator.pushNamed(context, LoginScreen.id);
                   },
@@ -77,10 +98,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     print('нажата регистрация');
-                  Navigator.pushNamed(context, RegistrationScreen.id);
-
+                    Navigator.pushNamed(context, RegistrationScreen.id);
                   },
-
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
