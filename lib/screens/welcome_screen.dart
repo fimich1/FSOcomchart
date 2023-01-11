@@ -1,6 +1,7 @@
 import 'package:comchart/screens/login_screen.dart';
 import 'package:comchart/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = "welcome_scrin";
@@ -53,13 +54,27 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: 60.0,
                   ),
                 ),
-                Text(
-                  'Flash Chat',
-                  style: TextStyle(
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
+        SizedBox(
+          width: 250.0,
+          child: DefaultTextStyle(
+            style: const TextStyle(
+              fontSize: 45.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Agne',
+            ),
+            child: AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText('Flash Chat'),
+              ],
+              onTap: () {
+                print("Мышей объелся чтоли?");
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
+              totalRepeatCount: 4,
+            ),
+          ),
+        ),
+
               ],
             ),
             SizedBox(
