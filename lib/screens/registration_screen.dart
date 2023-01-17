@@ -54,13 +54,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 password = value;
                 },
               decoration: kTextFieldDecoratonale.
-              copyWith(hintText: 'Введи пароль'),
+              copyWith(hintText: 'Введи пароль > 6 символов'),
             ),
             SizedBox(
               height: 24.0,
             ),
             RoundedButton(
-              title: 'Register',
+              title: 'Зарегистрировать',
               colour: Colors.blueAccent,
               onPressed: () async {
                 try {

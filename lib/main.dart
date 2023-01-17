@@ -5,9 +5,14 @@ import 'package:comchart/screens/registration_screen.dart';
 import 'package:comchart/screens/welcome_screen.dart';
 import 'package:comchart/routes.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(const FlashChat());
-
+//void main() => runApp(const FlashChat());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(FlashChat());
+}
 class FlashChat extends StatelessWidget {
   const FlashChat({super.key});
 
