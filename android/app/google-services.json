@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "717477168244",
+    "project_id": "trchat-cb374",
+    "storage_bucket": "trchat-cb374.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717477168244:android:59a1982e7c12adf537bd21",
+        "android_client_info": {
+          "package_name": "com.picmaker.comchart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717477168244-0lunsbm9fp81fdfua6cqqfj8a95knr5t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpyWPRpr8fwc_zHH7FNZ-11Ihc7N0UR84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717477168244-0lunsbm9fp81fdfua6cqqfj8a95knr5t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
