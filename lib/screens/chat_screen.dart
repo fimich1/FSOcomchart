@@ -26,8 +26,8 @@ class _ChatScreenState extends State<ChatScreen> {
   void getCurrentUser() async {
     try {
       final User? user = await _auth.currentUser;
-      final uid = user?.email;
-      print(uid);
+      //  final uid = user?.email;
+      //  print(uid);
     } catch (e) {
       print(e);
     }
@@ -70,6 +70,38 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder(
+                stream: _firestore.collection('messages').snapshots(),
+                builder: (context, snapshot) {
+                  List<MessageCub> messageCubs = [];
+                  if (snapshot.hasData) {
+                    final messages = snapshot.data?.docs;
+                    for (var message in messages!) {
+                      final messageText =
+                          message.data()['text']; // this a firebase data
+                      final messageSender = message.data()['sender'];
+                      final messageCub = MessageCub(
+                        text: messageText,
+                        sender: messageSender,
+                      );
+
+                      messageCubs.add(messageCub);
+                    } //for
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.lightGreen,
+                      ),
+                    );
+                  } //if
+                  return Expanded(
+                    child: ListView(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 20.0),
+                        children: messageCubs),
+                  );
+                } //builder
+                ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -87,8 +119,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       _firestore.collection('messages').add({
                         'text': messageText,
-                        'sender': _auth.currentUser?.email,
-                      });
+                        'sender': _auth.currentUser?.email, // это поменять?
+                            });
                       //Implement send functionality.
                     },
                     child: Text(
@@ -100,6 +132,37 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MessageCub extends StatelessWidget {
+  //const MessageCub({Key? key}) : super(key: key);  -создалось автоматом
+
+  MessageCub({required this.text, required this.sender});
+  final String? sender;
+  final String? text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(30.0),
+        elevation: 5.0,
+        color: Colors.lightBlueAccent,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 10.0,
+            horizontal: 20.0,
+          ),
+          child: Text('$text from $sender',
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 15.0,
+              )),
         ),
       ),
     );
