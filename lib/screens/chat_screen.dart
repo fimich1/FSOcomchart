@@ -86,6 +86,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       messageTextController.clear();
                       _firestore.collection('messages').add({
+                        'timestamp': Timestamp.now(),
                         'text': messageText,
                         'sender': _auth.currentUser?.email, // это поменять?
                       });
@@ -112,7 +113,9 @@ class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _firestore.collection('messages').snapshots(),
+        stream: _firestore.collection('messages').
+        orderBy('timestamp', descending: true).
+        snapshots(),
         builder: (context, snapshot) {
           List<MessageCub> messageCubs = [];
           if (snapshot.hasData) {
@@ -144,6 +147,7 @@ class MessagesStream extends StatelessWidget {
           } //if
           return Expanded(
             child: ListView(
+              reverse: true,
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
                 children: messageCubs),
           );
@@ -169,8 +173,6 @@ class MessageCub extends StatelessWidget {
             isMe
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
-
-        //  crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             '$sender',
@@ -180,8 +182,14 @@ class MessageCub extends StatelessWidget {
             ),
           ),
           Material(
-            borderRadius: BorderRadius.only(
+            borderRadius: isMe
+              ? BorderRadius.only(
               topLeft: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
+            )
+            : BorderRadius.only(
+              topRight: Radius.circular(30.0),
               bottomLeft: Radius.circular(30.0),
               bottomRight: Radius.circular(30.0),
             ),
@@ -196,7 +204,9 @@ class MessageCub extends StatelessWidget {
               ),
               child: Text('$text',
                   style: TextStyle(
-                    color: Colors.blueGrey,
+                    color: isMe
+                        ? Colors.blueGrey
+                        : Colors.lightGreen,
                     fontSize: 15.0,
                   )),
             ),
